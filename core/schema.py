@@ -4,17 +4,32 @@ from pydantic import BaseModel, Field
 
 class TestCase(BaseModel):
     """
-    Represents a single test case.
+    Represents a single test case aligned with schema.md.
     """
 
-    id: str = Field(
+    use_case: str = Field(
         ...,
-        description="Unique test case identifier, e.g. TC_LOGIN_001"
+        description="High-level use case this test belongs to"
     )
 
-    title: str = Field(
+    test_case: str = Field(
         ...,
-        description="Short, descriptive test case title"
+        description="Short descriptive name of the test case"
+    )
+
+    preconditions: List[str] = Field(
+        default_factory=list,
+        description="Conditions that must be satisfied before execution"
+    )
+
+    test_data: Dict[str, str] = Field(
+        default_factory=dict,
+        description="Input data required for the test"
+    )
+
+    steps: List[str] = Field(
+        ...,
+        description="Step-by-step actions to execute the test"
     )
 
     priority: str = Field(
@@ -22,40 +37,25 @@ class TestCase(BaseModel):
         description="Priority of the test case: high, medium, or low"
     )
 
-    type: str = Field(
-        ...,
-        description="Type of test case: functional, integration, negative, boundary"
-    )
-
-    preconditions: List[str] = Field(
+    tags: List[str] = Field(
         default_factory=list,
-        description="Conditions that must be true before executing the test"
-    )
-
-    steps: List[str] = Field(
-        ...,
-        description="Ordered list of steps to execute the test"
+        description="Labels for categorization or filtering"
     )
 
     expected_results: List[str] = Field(
         ...,
-        description="Expected outcome for each step or for the test as a whole"
+        description="Expected outcome after executing the steps"
     )
 
-    test_data: Dict[str, str] = Field(
-        default_factory=dict,
-        description="Input data required to execute the test"
-    )
-
-    tags: List[str] = Field(
-        default_factory=list,
-        description="Labels for grouping or filtering test cases"
+    actual_results: Optional[List[str]] = Field(
+        default=None,
+        description="Actual results observed during execution"
     )
 
 
 class TestSuite(BaseModel):
     """
-    Represents a collection of test cases generated from a document.
+    Collection of test cases derived from a feature or document.
     """
 
     feature_name: str = Field(
@@ -65,10 +65,10 @@ class TestSuite(BaseModel):
 
     source_document: str = Field(
         ...,
-        description="Source document used to generate the test cases"
+        description="Document used to generate the test cases"
     )
 
     test_cases: List[TestCase] = Field(
         ...,
-        description="List of generated test cases"
+        description="Generated test cases"
     )
