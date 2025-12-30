@@ -1,4 +1,4 @@
-from typing import List, Dict, Optional
+from typing import List, Dict, Optional, Union
 from pydantic import BaseModel, Field
 
 
@@ -22,9 +22,9 @@ class TestCase(BaseModel):
         description="Conditions that must be satisfied before execution"
     )
 
-    test_data: Dict[str, str] = Field(
-        default_factory=dict,
-        description="Input data required for the test"
+    test_data: Dict[str, Union[str, int, float, bool]] = Field(
+    default_factory=dict,
+    description="Input data required for the test"
     )
 
     steps: List[str] = Field(

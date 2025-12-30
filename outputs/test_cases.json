@@ -1,0 +1,213 @@
+{
+  "feature_name": "Record History Tracking (Timeline)",
+  "source_document": "Feature Documentation",
+  "test_cases": [
+    {
+      "use_case": "View Record Timeline",
+      "test_case": "Timeline displays complete and accurate record history",
+      "preconditions": [
+        "CRM record exists",
+        "User has permissions to view timeline"
+      ],
+      "test_data": {
+        "record_id": 123,
+        "user_id": 456
+      },
+      "steps": [
+        "Open CRM record with id 123",
+        "Navigate to Timeline tab",
+        "Verify that timeline displays complete and accurate record history"
+      ],
+      "priority": "high",
+      "tags": [
+        "Timeline",
+        "Record History"
+      ],
+      "expected_results": [
+        "Timeline displays all activity entries and system changes"
+      ],
+      "actual_results": []
+    },
+    {
+      "use_case": "View Record Timeline",
+      "test_case": "System changes are clearly identifiable",
+      "preconditions": [
+        "CRM record exists",
+        "User has permissions to view timeline"
+      ],
+      "test_data": {
+        "record_id": 123,
+        "user_id": 456
+      },
+      "steps": [
+        "Open CRM record with id 123",
+        "Navigate to Timeline tab",
+        "Verify that system changes are clearly identifiable"
+      ],
+      "priority": "high",
+      "tags": [
+        "Timeline",
+        "Record History"
+      ],
+      "expected_results": [
+        "System changes are clearly labeled as such"
+      ],
+      "actual_results": []
+    },
+    {
+      "use_case": "View Record Timeline",
+      "test_case": "Timeline data matches web CRM history",
+      "preconditions": [
+        "CRM record exists",
+        "User has permissions to view timeline"
+      ],
+      "test_data": {
+        "record_id": 123,
+        "user_id": 456
+      },
+      "steps": [
+        "Open CRM record with id 123",
+        "Navigate to Timeline tab on web CRM",
+        "Verify that timeline data matches between mobile and web CRM"
+      ],
+      "priority": "high",
+      "tags": [
+        "Timeline",
+        "Record History"
+      ],
+      "expected_results": [
+        "Timeline data is consistent across platforms"
+      ],
+      "actual_results": []
+    },
+    {
+      "use_case": "View Record Timeline",
+      "test_case": "Timeline loads incrementally for large histories",
+      "preconditions": [
+        "CRM record exists",
+        "User has permissions to view timeline"
+      ],
+      "test_data": {
+        "record_id": 123,
+        "user_id": 456
+      },
+      "steps": [
+        "Open CRM record with id 123",
+        "Navigate to Timeline tab with over 100 entries",
+        "Verify that timeline loads incrementally"
+      ],
+      "priority": "high",
+      "tags": [
+        "Timeline",
+        "Record History"
+      ],
+      "expected_results": [
+        "Timeline loads without UI lag or errors"
+      ],
+      "actual_results": []
+    },
+    {
+      "use_case": "View Record Timeline",
+      "test_case": "Timeline respects user permissions",
+      "preconditions": [
+        "CRM record exists",
+        "User has different permissions to view timeline"
+      ],
+      "test_data": {
+        "record_id": 123,
+        "user_id": 456
+      },
+      "steps": [
+        "Open CRM record with id 123",
+        "Navigate to Timeline tab with different user permission settings",
+        "Verify that timeline respects user permissions"
+      ],
+      "priority": "high",
+      "tags": [
+        "Timeline",
+        "Record History"
+      ],
+      "expected_results": [
+        "Timeline data is consistent with user permissions"
+      ],
+      "actual_results": []
+    },
+    {
+      "use_case": "View Record Timeline",
+      "test_case": "No missing or duplicated entries",
+      "preconditions": [
+        "CRM record exists",
+        "User has permissions to view timeline"
+      ],
+      "test_data": {
+        "record_id": 123,
+        "user_id": 456
+      },
+      "steps": [
+        "Open CRM record with id 123",
+        "Navigate to Timeline tab",
+        "Verify that there are no missing or duplicated entries"
+      ],
+      "priority": "high",
+      "tags": [
+        "Timeline",
+        "Record History"
+      ],
+      "expected_results": [
+        "Timeline data is consistent and accurate"
+      ],
+      "actual_results": []
+    },
+    {
+      "use_case": "View Record Timeline",
+      "test_case": "Consistent ordering across sessions",
+      "preconditions": [
+        "CRM record exists",
+        "User has permissions to view timeline"
+      ],
+      "test_data": {
+        "record_id": 123,
+        "user_id": 456
+      },
+      "steps": [
+        "Open CRM record with id 123",
+        "Navigate to Timeline tab and save current session",
+        "Close and reopen CRM app, then navigate to Timeline tab again"
+      ],
+      "priority": "high",
+      "tags": [
+        "Timeline",
+        "Record History"
+      ],
+      "expected_results": [
+        "Timeline data is consistent across sessions"
+      ],
+      "actual_results": []
+    },
+    {
+      "use_case": "View Record Timeline",
+      "test_case": "Timeline reflects updates in near real time",
+      "preconditions": [
+        "CRM record exists",
+        "User has permissions to view timeline"
+      ],
+      "test_data": {
+        "record_id": 123,
+        "user_id": 456
+      },
+      "steps": [
+        "Open CRM record with id 123",
+        "Make changes to CRM record and verify that timeline reflects updates in near real time"
+      ],
+      "priority": "high",
+      "tags": [
+        "Timeline",
+        "Record History"
+      ],
+      "expected_results": [
+        "Timeline data is up-to-date"
+      ],
+      "actual_results": []
+    }
+  ]
+}
