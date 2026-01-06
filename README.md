@@ -136,7 +136,7 @@ Future versions may support API based models and hybrid configurations.
 ## Installation (Development)
 
 ```bash
-git clone https://github.com/<your-username>/casecraft.git
+git clone https://github.com/T-Tests/casecraft.git
 cd casecraft
 python -m venv venv
 venv\Scripts\activate
