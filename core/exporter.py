@@ -18,7 +18,11 @@ def _join_lines(items: List[str]) -> str:
 def _export_excel(suite: TestSuite, output_path: str) -> None:
     workbook = Workbook()
 
-    sheet: Worksheet = workbook.create_sheet(title="Test Cases")
+    sheet = workbook.active
+    if sheet is None:
+        sheet = workbook.create_sheet(title="Test Cases")
+    else:
+        sheet.title = "Test Cases"
 
     headers = [
         "Use Case",
@@ -52,8 +56,7 @@ def _export_excel(suite: TestSuite, output_path: str) -> None:
             _join_lines(test_case.actual_results or []),
         ])
 
-    if "Sheet" in workbook.sheetnames:
-        del workbook["Sheet"]
+    # no need to delete default sheet when using workbook.active
 
     Path(output_path).parent.mkdir(parents=True, exist_ok=True)
     workbook.save(output_path)

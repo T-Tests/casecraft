@@ -1,4 +1,4 @@
-from typing import List, Dict, Optional, Union
+from typing import List, Dict, Optional, Any
 from pydantic import BaseModel, Field
 
 
@@ -22,9 +22,9 @@ class TestCase(BaseModel):
         description="Conditions that must be satisfied before execution"
     )
 
-    test_data: Dict[str, Union[str, int, float, bool]] = Field(
-    default_factory=dict,
-    description="Input data required for the test"
+    test_data: Dict[str, Any] = Field(
+        default_factory=dict,
+        description="Input data required for the test (allows nested JSON values)"
     )
 
     steps: List[str] = Field(
@@ -47,8 +47,8 @@ class TestCase(BaseModel):
         description="Expected outcome after executing the steps"
     )
 
-    actual_results: Optional[List[str]] = Field(
-        default=None,
+    actual_results: List[str] = Field(
+        default_factory=list,
         description="Actual results observed during execution"
     )
 
