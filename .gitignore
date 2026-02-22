@@ -141,6 +141,8 @@ celerybeat.pid
 env/
 venv/
 ENV/
+venv-ingest/
+venv-runtime/
 env.bak/
 venv.bak/
 
@@ -205,3 +207,22 @@ cython_debug/
 marimo/_static/
 marimo/_lsp/
 __marimo__/
+
+# Validated Data
+knowledge_base/index.json
+knowledge_base/chroma/
+
+# Outputs
+outputs/
+*.xlsx
+
+# CaseCraft Configuration & Secrets
+casecraft.yaml
+casecraft_config.json
+
+# Local Debug Scripts
+debug_*.py
+test_*.py
+
+# MCP & AnythingLLM configurations
+claude_desktop_config.json

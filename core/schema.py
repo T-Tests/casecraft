@@ -17,6 +17,11 @@ class TestCase(BaseModel):
         description="Short descriptive name of the test case"
     )
 
+    test_type: str = Field(
+        default="functionality",
+        description="Type of test case: functionality, ui, performance, integration, usability, database, security, or acceptance"
+    )
+
     preconditions: List[str] = Field(
         default_factory=list,
         description="Conditions that must be satisfied before execution"
@@ -40,6 +45,11 @@ class TestCase(BaseModel):
     tags: List[str] = Field(
         default_factory=list,
         description="Labels for categorization or filtering"
+    )
+
+    dependencies: List[str] = Field(
+        default_factory=list,
+        description="List of other test cases or conditions this test depends on"
     )
 
     expected_results: List[str] = Field(

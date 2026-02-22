@@ -1,4 +1,5 @@
 import json
+import os
 from pathlib import Path
 from typing import List
 
@@ -8,7 +9,26 @@ from openpyxl.styles import Alignment
 from openpyxl.utils import get_column_letter
 
 from core.schema import TestSuite
-from core.output import OutputFormat
+from core.config import config
+
+
+def _validate_output_path(output_path: str) -> str:
+    """
+    Validate that the output path is within the configured output directory.
+    Prevents path traversal attacks (e.g., writing to ../../.ssh/).
+    """
+    abs_path = Path(output_path).resolve()
+    allowed_dir = Path(config.output.output_dir).resolve()
+    
+    try:
+        abs_path.relative_to(allowed_dir)
+    except ValueError:
+        raise PermissionError(
+            f"Output path must be within '{config.output.output_dir}/'. "
+            f"Got: {output_path}"
+        )
+    
+    return str(abs_path)
 
 
 def _join_lines(items: List[str]) -> str:
@@ -27,10 +47,12 @@ def _export_excel(suite: TestSuite, output_path: str) -> None:
     headers = [
         "Use Case",
         "Test Case",
+        "Test Type",
         "Preconditions",
         "Test Data",
         "Steps",
         "Priority",
+        "Dependencies",
         "Tags",
         "Expected Results",
         "Actual Results",
@@ -47,10 +69,12 @@ def _export_excel(suite: TestSuite, output_path: str) -> None:
         sheet.append([
             test_case.use_case,
             test_case.test_case,
+            getattr(test_case, 'test_type', 'functionality'),
             _join_lines(test_case.preconditions),
             "\n".join(f"{k}: {v}" for k, v in test_case.test_data.items()),
             _join_lines(test_case.steps),
             test_case.priority,
+            ", ".join(test_case.dependencies),
             ", ".join(test_case.tags),
             _join_lines(test_case.expected_results),
             _join_lines(test_case.actual_results or []),
@@ -58,24 +82,27 @@ def _export_excel(suite: TestSuite, output_path: str) -> None:
 
     # no need to delete default sheet when using workbook.active
 
-    Path(output_path).parent.mkdir(parents=True, exist_ok=True)
-    workbook.save(output_path)
+    validated = _validate_output_path(output_path)
+    Path(validated).parent.mkdir(parents=True, exist_ok=True)
+    workbook.save(validated)
 
 
 def _export_json(suite: TestSuite, output_path: str) -> None:
-    Path(output_path).parent.mkdir(parents=True, exist_ok=True)
-    with open(output_path, "w", encoding="utf-8") as f:
+    validated = _validate_output_path(output_path)
+    Path(validated).parent.mkdir(parents=True, exist_ok=True)
+    with open(validated, "w", encoding="utf-8") as f:
         f.write(suite.model_dump_json(indent=2))
 
 
 def export(
     suite: TestSuite,
-    output_format: OutputFormat,
+    output_format: str,
     output_path: str,
 ) -> None:
-    if output_format == OutputFormat.excel:
+    fmt = output_format.lower().strip()
+    if fmt == "excel":
         _export_excel(suite, output_path)
-    elif output_format == OutputFormat.json:
+    elif fmt == "json":
         _export_json(suite, output_path)
     else:
         raise ValueError(f"Unsupported output format: {output_format}")

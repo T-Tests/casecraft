@@ -20,7 +20,7 @@ def _clean_text(text: str) -> str:
 
 def _chunk_text(
     text: str,
-    chunk_size: int = 800,
+    chunk_size: int = 1000,
     overlap: int = 100,
 ) -> List[str]:
     """
@@ -107,7 +107,7 @@ def _parse_text(file_path: str) -> str:
 
 def parse_document(
     file_path: str,
-    chunk_size: int = 800,
+    chunk_size: int = 1000,
     overlap: int = 100,
 ) -> List[str]:
     """
@@ -117,6 +117,12 @@ def parse_document(
 
     if not path.exists():
         raise FileNotFoundError(f"File not found: {file_path}")
+
+    # SEC-08: Reject files larger than 50MB to prevent memory exhaustion
+    MAX_FILE_SIZE_MB = 50
+    file_size_mb = path.stat().st_size / (1024 * 1024)
+    if file_size_mb > MAX_FILE_SIZE_MB:
+        raise DocumentParseError(f"File too large ({file_size_mb:.1f}MB). Maximum allowed: {MAX_FILE_SIZE_MB}MB.")
 
     suffix = path.suffix.lower()
 
